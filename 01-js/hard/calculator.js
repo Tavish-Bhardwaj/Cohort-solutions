@@ -16,6 +16,75 @@
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+    this.result = 0;
+  }
 
+  // Method to add a number to the result
+  add(number) {
+    this.result += number;
+    return this; // Returning this for method chaining
+  }
+
+  // Method to subtract a number from the result
+  subtract(number) {
+    this.result -= number;
+    return this; // Returning this for method chaining
+  }
+
+  // Method to multiply the result by a number
+  multiply(number) {
+    this.result *= number;
+    return this; // Returning this for method chaining
+  }
+
+  // Method to divide the result by a number
+  divide(number) {
+    // if (number === 0) {
+    //   throw new Error("Division by zero is not allowed");
+    // }
+    if (number === 0) {
+      throw new Error("Division by zero is not allowed");
+    }
+    this.result = this.result / number;
+    return this; // Returning this for method chaining
+  }
+
+  // Method to clear the result
+  clear() {
+    this.result = 0;
+    return this; // Returning this for method chaining
+  }
+
+  // Method to get the result
+  getResult() {
+    return this.result;
+  }
+
+  // Method to evaluate a string expression
+  calculate(expression) {
+    // Remove all non-numeric and non-operator characters except parentheses and spaces
+    expression = expression.replace(/[^0-9+\-*/().\s]/g, '');
+
+    // Replace multiple spaces with a single space
+    expression = expression.replace(/\s+/g, ' ');
+
+
+    // Check for division by zero in the expression
+    const divisionByZeroRegex = /\/\s*0(?!\d)/;
+    if (divisionByZeroRegex.test(expression)) {
+      throw new Error("Division by zero is not allowed");
+    }
+
+    // Evaluate the expression
+    // Note: Using eval is generally not recommended due to security reasons, but for this exercise it is acceptable
+    try {
+      this.result = eval(expression);
+      return this.result;
+    } catch (error) {
+      throw new Error("Invalid expression");
+    }
+  }
+}
 module.exports = Calculator;
